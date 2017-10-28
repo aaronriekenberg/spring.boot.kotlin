@@ -1,0 +1,12 @@
+endpoints:
+  enabled: true
+  sensitive: false
+
+management:
+  security:
+    enabled: false
+
+info:
+  app:
+    name: kotlin test
+    version: 1.0-SNAPSHOT
