@@ -13,10 +13,12 @@ class Controller {
     private val logger: Logger = LoggerFactory.getLogger(Controller::class.java)
 
     @GetMapping("/{id}")
-    fun get(@PathVariable("id") id: String): ResponseEntity<TestResponse> {
+    fun get(@PathVariable("id") id: String): ResponseEntity<List<TestResponse>> {
         logger.info("in get id = '{}'", id);
 
-        return ResponseEntity.ok(TestResponse(id = id, message = "hello"))
+        val list = (0..10).map { TestResponse(id = "id", message = "hello ${it}") }
+
+        return ResponseEntity.ok(list)
     }
 
 }
