@@ -3,7 +3,6 @@ package org.aaron.springboot.kotlin.filter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebFilter
@@ -40,7 +39,7 @@ class LoggingFilter : WebFilter {
         val response = exchange.response
         val method = request.method
         val path = request.uri.path
-        val statusCode = response.statusCode ?: HttpStatus.CONTINUE
+        val statusCode = response.statusCode
         val contentType = response.headers.contentType
         return "<<< $method $path ${statusCode.value()} ${statusCode.reasonPhrase} ${HttpHeaders.CONTENT_TYPE}: $contentType"
     }
