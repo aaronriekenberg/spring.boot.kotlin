@@ -1,6 +1,9 @@
-endpoints:
-  enabled: true
-  sensitive: false
+management:
+  endpoints:
+    web:
+      expose: info, health, metrics
+  server:
+    port: 8010
 
 info:
   app:

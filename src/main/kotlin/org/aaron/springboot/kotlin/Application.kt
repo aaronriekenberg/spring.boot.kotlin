@@ -16,8 +16,9 @@ open class Application {
     open fun routes(controller: Controller): RouterFunction<ServerResponse> {
         return router {
             (path("/kotlin_service/v1") and accept(MediaType.APPLICATION_JSON)).nest {
-                GET("/", controller::getAll)
+                (POST("/") and contentType(MediaType.APPLICATION_JSON)).invoke(controller::createOne)
                 GET("/{id}", controller::getOne)
+                GET("/", controller::getAll)
             }
         }
     }
