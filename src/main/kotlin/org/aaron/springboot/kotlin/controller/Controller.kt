@@ -14,7 +14,6 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 
-
 @Service
 class Controller(
         @Autowired private val webClient: WebClient,
