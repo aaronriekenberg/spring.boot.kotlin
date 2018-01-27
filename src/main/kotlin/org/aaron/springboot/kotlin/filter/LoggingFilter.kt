@@ -4,7 +4,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebFilter
@@ -19,14 +18,12 @@ class LoggingFilter : WebFilter {
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
         logger.info(getRequestMessage(exchange))
 
-        val result = chain.filter(exchange)
-
         exchange.response.beforeCommit {
             logger.info(getResponseMessage(exchange))
             Mono.empty()
         }
 
-        return result
+        return chain.filter(exchange)
     }
 
     private fun getRequestMessage(exchange: ServerWebExchange): String {
