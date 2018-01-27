@@ -61,7 +61,7 @@ class Controller(
         val result = webClient.get()
                 .uri("https://www.google.com")
                 .exchange()
-                .flatMap({ response -> response.toEntity(String::class.java) })
+                .flatMap { response -> response.toEntity(String::class.java) }
 
         return result.flatMap { responseEntity ->
             ServerResponse.status(responseEntity.statusCode)
