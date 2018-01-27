@@ -17,9 +17,7 @@ class TestRepository {
     private val map: ConcurrentHashMap<Int, TestObject> = ConcurrentHashMap()
 
     fun createOne(testObjectMono: Mono<TestObject>): Mono<TestObjectAndID> {
-        logger.info("in createOne")
         return testObjectMono.flatMap { testObject ->
-            logger.info("inside flatMap testObject = ${testObject}")
             var done = false
             var id = 0
             while (!done) {
