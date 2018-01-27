@@ -39,10 +39,10 @@ class Controller(
         val id = request.pathVariable("id").toInt()
 
         return testRepository.getOne(id)
-                .flatMap { testObject ->
+                .flatMap {
                     ServerResponse.ok()
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromObject(testObject))
+                            .body(BodyInserters.fromObject(it))
                 }
                 .switchIfEmpty(ServerResponse.notFound().build())
     }
@@ -63,10 +63,10 @@ class Controller(
                 .exchange()
                 .flatMap { response -> response.toEntity(String::class.java) }
 
-        return result.flatMap { responseEntity ->
-            ServerResponse.status(responseEntity.statusCode)
+        return result.flatMap {
+            ServerResponse.status(it.statusCode)
                     .contentType(MediaType.TEXT_HTML)
-                    .body(BodyInserters.fromObject(responseEntity.body))
+                    .body(BodyInserters.fromObject(it.body))
         }
     }
 
