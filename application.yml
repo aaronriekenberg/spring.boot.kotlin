@@ -9,3 +9,6 @@ info:
   app:
     name: kotlin test
     version: 1.0-SNAPSHOT
+
+testService:
+  proxyURI: https://www.google.com
