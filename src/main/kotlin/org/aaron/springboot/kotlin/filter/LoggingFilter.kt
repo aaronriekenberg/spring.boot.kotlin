@@ -43,16 +43,9 @@ class LoggingFilter : WebFilter {
         val response = exchange.response
         val method = request.method
         val path = request.uri.path
-        val statusCode = getStatus(response)
+        val statusCode = response.statusCode ?: HttpStatus.CONTINUE
         val contentType = response.headers.contentType
         return "<<< $method $path ${statusCode.value()} ${statusCode.reasonPhrase} ${HttpHeaders.CONTENT_TYPE}: $contentType"
     }
-
-    private fun getStatus(response: ServerHttpResponse): HttpStatus =
-            try {
-                response.statusCode
-            } catch (ex: Exception) {
-                HttpStatus.CONTINUE
-            }
 
 }

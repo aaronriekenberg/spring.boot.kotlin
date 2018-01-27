@@ -17,6 +17,7 @@ open class Application {
         return router {
             (path("/kotlin_service/v1") and accept(MediaType.APPLICATION_JSON)).nest {
                 GET("/", controller::getAll)
+                GET("/{id}", controller::getOne)
             }
         }
     }
