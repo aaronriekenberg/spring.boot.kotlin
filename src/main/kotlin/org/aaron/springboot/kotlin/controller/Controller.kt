@@ -7,14 +7,19 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
+import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 
+
 @Service
-class Controller(@Autowired private val testRepository: TestRepository) {
+class Controller(
+        @Autowired private val webClient: WebClient,
+        @Autowired private val testRepository: TestRepository) {
 
     private val logger: Logger = LoggerFactory.getLogger(Controller::class.java)
 
@@ -50,6 +55,21 @@ class Controller(@Autowired private val testRepository: TestRepository) {
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(testRepository.getAll(), TestObjectAndID::class.java)
+    }
+
+    fun getProxy(request: ServerRequest): Mono<ServerResponse> {
+        logger.info("in getProxy request = {}", request);
+
+        val result = webClient.get()
+                .uri("https://www.google.com")
+                .exchange()
+                .flatMap({ response -> response.toEntity(String::class.java) })
+
+        return result.flatMap { responseEntity ->
+            ServerResponse.status(responseEntity.statusCode)
+                    .contentType(MediaType.TEXT_HTML)
+                    .body(BodyInserters.fromObject(responseEntity.body))
+        }
     }
 
 }
