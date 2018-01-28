@@ -35,9 +35,9 @@ class WeatherService(
                                             placeName = placeNameAndURI.placeName,
                                             statusCode = clientResponse.statusCode().value()))
                                 } else {
-                                    clientResponse.toEntity(Map::class.java)
-                                            .flatMap { responseEntity ->
-                                                val query = responseEntity.body?.get("query") as Map<*, *>?
+                                    clientResponse.bodyToMono(Map::class.java)
+                                            .flatMap { bodyMap ->
+                                                val query = bodyMap.get("query") as Map<*, *>?
                                                 val results = query?.get("results") as Map<*, *>?
                                                 val channel = results?.get("channel") as Map<*, *>?
                                                 val item = channel?.get("item") as Map<*, *>?
@@ -47,7 +47,7 @@ class WeatherService(
                                                 val text = condition?.get("text") as String?
                                                 Mono.just(
                                                         Weather(placeName = placeNameAndURI.placeName,
-                                                                statusCode = responseEntity.statusCodeValue,
+                                                                statusCode = clientResponse.statusCode().value(),
                                                                 reportTitle = title,
                                                                 reportTemperature = temperature,
                                                                 reportText = text))
