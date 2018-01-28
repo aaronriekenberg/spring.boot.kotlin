@@ -1,9 +1,8 @@
 package org.aaron.springboot.kotlin.repository
 
+import mu.KLogging
 import org.aaron.springboot.kotlin.model.TestObject
 import org.aaron.springboot.kotlin.model.TestObjectAndID
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -12,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap
 @Service
 class TestRepository {
 
-    private val logger: Logger = LoggerFactory.getLogger(TestRepository::class.java)
+    companion object : KLogging()
 
     private val map: ConcurrentHashMap<Int, TestObject> = ConcurrentHashMap()
 
@@ -24,9 +23,9 @@ class TestRepository {
                 id = map.size + 1
                 done = (map.putIfAbsent(id, testObject) == null)
                 if (done) {
-                    logger.info("saved {} id {} new size {}", testObject, id, map.size)
+                    logger.info { "saved $testObject id $id new size ${map.size}" }
                 } else {
-                    logger.info("collision saving id {} trying again", id)
+                    logger.info { "collision saving id $id trying again" }
                 }
             }
             Mono.just(TestObjectAndID(testObject = testObject, id = id))

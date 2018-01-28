@@ -1,10 +1,9 @@
 package org.aaron.springboot.kotlin.service
 
+import mu.KLogging
 import org.aaron.springboot.kotlin.model.TestObject
 import org.aaron.springboot.kotlin.model.TestObjectAndID
 import org.aaron.springboot.kotlin.repository.TestRepository
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
@@ -21,28 +20,28 @@ class TestService(
         @Autowired private val testRepository: TestRepository,
         @Value("\${testService.proxyURI}") private val proxyURI: String) {
 
-    val logger: Logger = LoggerFactory.getLogger(TestService::class.java)
+    companion object : KLogging()
 
     fun createOne(testObjectMono: Mono<TestObject>): Mono<TestObjectAndID> {
-        logger.info("createOne")
+        logger.debug("createOne")
 
         return testRepository.createOne(testObjectMono)
     }
 
     fun getOne(id: Int): Mono<TestObject> {
-        logger.info("getOne")
+        logger.debug("getOne")
 
         return testRepository.getOne(id)
     }
 
     fun getAll(): Flux<TestObjectAndID> {
-        logger.info("getAll")
+        logger.debug("getAll")
 
         return testRepository.getAll()
     }
 
     fun getProxy(): Mono<ResponseEntity<String>> {
-        logger.info("getProxy")
+        logger.debug("getProxy")
 
         val uri = URI(proxyURI)
 

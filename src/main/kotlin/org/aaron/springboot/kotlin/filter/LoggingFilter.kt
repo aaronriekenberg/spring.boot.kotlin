@@ -1,7 +1,6 @@
 package org.aaron.springboot.kotlin.filter
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import mu.KLogging
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
@@ -12,13 +11,13 @@ import reactor.core.publisher.Mono
 @Component
 class LoggingFilter : WebFilter {
 
-    private val logger: Logger = LoggerFactory.getLogger(LoggingFilter::class.java)
+    companion object : KLogging()
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
-        logger.info(getRequestMessage(exchange))
+        logger.info { getRequestMessage(exchange) }
 
         exchange.response.beforeCommit {
-            logger.info(getResponseMessage(exchange))
+            logger.info { getResponseMessage(exchange) }
             Mono.empty()
         }
 
@@ -41,7 +40,7 @@ class LoggingFilter : WebFilter {
         val path = request.uri.path
         val statusCode = response.statusCode
         val contentType = response.headers.contentType
-        return "<<< $method $path ${statusCode.value()} ${statusCode.reasonPhrase} ${HttpHeaders.CONTENT_TYPE}: $contentType"
+        return "<<< $method $path ${statusCode?.value()} ${statusCode?.reasonPhrase} ${HttpHeaders.CONTENT_TYPE}: $contentType"
     }
 
 }

@@ -1,8 +1,7 @@
 package org.aaron.springboot.kotlin.config
 
+import mu.KLogging
 import org.aaron.springboot.kotlin.model.PlaceNameAndURI
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
@@ -13,12 +12,12 @@ import javax.annotation.PostConstruct
 @Component
 class WeatherConfiguration {
 
-    private val logger: Logger = LoggerFactory.getLogger(WeatherConfiguration::class.java)
+    companion object : KLogging()
 
     val placeNameAndUriList = ArrayList<PlaceNameAndURI>()
 
     @PostConstruct
     fun postConstruct() {
-        logger.info("placeNameAndUriList = ${placeNameAndUriList}")
+        logger.info { "placeNameAndUriList = $placeNameAndUriList" }
     }
 }

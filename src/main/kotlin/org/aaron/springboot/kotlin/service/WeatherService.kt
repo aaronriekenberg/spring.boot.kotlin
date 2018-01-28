@@ -1,9 +1,8 @@
 package org.aaron.springboot.kotlin.service
 
+import mu.KLogging
 import org.aaron.springboot.kotlin.config.WeatherConfiguration
 import org.aaron.springboot.kotlin.model.Weather
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
@@ -17,7 +16,7 @@ class WeatherService(
         @Autowired private val webClient: WebClient,
         @Autowired private val weatherConfiguration: WeatherConfiguration) {
 
-    val logger: Logger = LoggerFactory.getLogger(WeatherService::class.java)
+    companion object : KLogging()
 
     fun getWeather(): Flux<Weather> {
 
