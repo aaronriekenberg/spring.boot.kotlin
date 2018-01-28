@@ -25,7 +25,7 @@ class WeatherService(
         weatherConfiguration.placeNameAndUriList.forEach { placeNameAndURI ->
             val uri = URI(placeNameAndURI.uri)
 
-            flux = flux.concatWith(
+            flux = flux.mergeWith(
                     webClient.get()
                             .uri(uri)
                             .exchange()

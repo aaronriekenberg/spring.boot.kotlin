@@ -18,6 +18,10 @@
         <appender-ref ref="STDOUT"/>
     </appender>
 
+    <logger name="reactor.ipc.netty.http.client" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC"/>
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="ASYNC"/>
     </root>

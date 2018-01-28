@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
 data class PlaceNameAndURI(var placeName: String = "", var uri: String = "")
 
-@JsonPropertyOrder("placeName", "statusCode", "title", "temperature")
+@JsonPropertyOrder("placeName", "statusCode", "reportTitle", "reportTemperature", "reportText")
 data class Weather(
         val placeName: String,
         val statusCode: Int,
