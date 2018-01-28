@@ -1,8 +1,6 @@
 package org.aaron.springboot.kotlin.controller
 
 import org.aaron.springboot.kotlin.model.TestObject
-import org.aaron.springboot.kotlin.model.TestObjectAndID
-import org.aaron.springboot.kotlin.model.Weather
 import org.aaron.springboot.kotlin.service.TestService
 import org.aaron.springboot.kotlin.service.WeatherService
 import org.slf4j.Logger
@@ -13,6 +11,8 @@ import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.body
+import org.springframework.web.reactive.function.server.bodyToMono
 import reactor.core.publisher.Mono
 
 @Service
@@ -25,12 +25,12 @@ class Controller(
     fun createOne(request: ServerRequest): Mono<ServerResponse> {
         logger.info("in createOne request = {}", request);
 
-        val testObjectMono = request.bodyToMono(TestObject::class.java)
+        val testObjectMono = request.bodyToMono<TestObject>()
 
         return testService.createOne(testObjectMono).flatMap {
             ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(BodyInserters.fromObject(it))
+                    .syncBody(it)
         }
     }
 
@@ -53,7 +53,7 @@ class Controller(
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(testService.getAll(), TestObjectAndID::class.java)
+                .body(testService.getAll())
     }
 
     fun getProxy(request: ServerRequest): Mono<ServerResponse> {
@@ -64,7 +64,7 @@ class Controller(
         return result.flatMap {
             ServerResponse.status(it.statusCode)
                     .contentType(it.headers.contentType ?: MediaType.TEXT_PLAIN)
-                    .body(BodyInserters.fromObject(it.body ?: "null"))
+                    .syncBody(it.body ?: "null")
         }
     }
 
@@ -73,7 +73,7 @@ class Controller(
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(weatherService.getWeather(), Weather::class.java)
+                .body(weatherService.getWeather())
     }
 
 }

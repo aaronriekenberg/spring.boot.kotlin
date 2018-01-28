@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.toEntity
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.net.URI
@@ -48,7 +49,7 @@ class TestService(
         return webClient.get()
                 .uri(uri)
                 .exchange()
-                .flatMap { it.toEntity(String::class.java) }
+                .flatMap { it.toEntity<String>() }
     }
 
 }

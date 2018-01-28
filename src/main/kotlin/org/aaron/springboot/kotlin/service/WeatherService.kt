@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToMono
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.net.URI
@@ -35,7 +36,7 @@ class WeatherService(
                                             placeName = placeNameAndURI.placeName,
                                             statusCode = clientResponse.statusCode().value()))
                                 } else {
-                                    clientResponse.bodyToMono(Map::class.java)
+                                    clientResponse.bodyToMono<Map<*, *>>()
                                             .flatMap { bodyMap ->
                                                 val query = bodyMap.get("query") as Map<*, *>?
                                                 val results = query?.get("results") as Map<*, *>?
