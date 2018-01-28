@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
@@ -43,7 +42,7 @@ class Controller(
                 .flatMap {
                     ServerResponse.ok()
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromObject(it))
+                            .syncBody(it)
                 }
                 .switchIfEmpty(ServerResponse.notFound().build())
     }
