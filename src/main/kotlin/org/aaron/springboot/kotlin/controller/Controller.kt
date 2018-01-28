@@ -59,7 +59,7 @@ class Controller(@Autowired private val testService: TestService) {
 
         return result.flatMap {
             ServerResponse.status(it.statusCode)
-                    .contentType(MediaType.TEXT_HTML)
+                    .contentType(it.headers.contentType ?: MediaType.TEXT_PLAIN)
                     .body(BodyInserters.fromObject(it.body ?: "null"))
         }
     }
