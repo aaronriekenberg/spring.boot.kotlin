@@ -12,3 +12,17 @@ info:
 
 testService:
   proxyURI: https://www.google.com
+
+weather:
+  placeNameAndUriList:
+    0:
+      placeName: St. Paul, MN
+      uri: https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22st%20paul%2C%20mn%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+
+    1:
+      placeName: Minneapolis, MN
+      uri: https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22minneapolis%2C%20mn%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+
+    2:
+      placeName: Eagan, MN
+      uri: https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22eagan%2C%20mn%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys

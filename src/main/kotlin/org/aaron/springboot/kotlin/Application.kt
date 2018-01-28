@@ -18,6 +18,7 @@ open class Application {
         return router {
             (path("/kotlin_service/v1") and accept(MediaType.APPLICATION_JSON)).nest {
                 (POST("/") and contentType(MediaType.APPLICATION_JSON)).invoke(controller::createOne)
+                GET("/weather", controller::getWeather)
                 GET("/proxy", controller::getProxy)
                 GET("/{id}", controller::getOne)
                 GET("/", controller::getAll)

@@ -2,7 +2,9 @@ package org.aaron.springboot.kotlin.controller
 
 import org.aaron.springboot.kotlin.model.TestObject
 import org.aaron.springboot.kotlin.model.TestObjectAndID
+import org.aaron.springboot.kotlin.model.Weather
 import org.aaron.springboot.kotlin.service.TestService
+import org.aaron.springboot.kotlin.service.WeatherService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +16,9 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 
 @Service
-class Controller(@Autowired private val testService: TestService) {
+class Controller(
+        @Autowired private val testService: TestService,
+        @Autowired private val weatherService: WeatherService) {
 
     private val logger: Logger = LoggerFactory.getLogger(Controller::class.java)
 
@@ -62,6 +66,14 @@ class Controller(@Autowired private val testService: TestService) {
                     .contentType(it.headers.contentType ?: MediaType.TEXT_PLAIN)
                     .body(BodyInserters.fromObject(it.body ?: "null"))
         }
+    }
+
+    fun getWeather(request: ServerRequest): Mono<ServerResponse> {
+        logger.info("in getWeather request = {}", request);
+
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(weatherService.getWeather(), Weather::class.java)
     }
 
 }

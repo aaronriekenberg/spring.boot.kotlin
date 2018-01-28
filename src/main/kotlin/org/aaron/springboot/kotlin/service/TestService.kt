@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.net.URI
 
 @Service
 class TestService(
@@ -42,8 +43,10 @@ class TestService(
     fun getProxy(): Mono<ResponseEntity<String>> {
         logger.info("getProxy")
 
+        val uri = URI(proxyURI)
+
         return webClient.get()
-                .uri(proxyURI)
+                .uri(uri)
                 .exchange()
                 .flatMap { it.toEntity(String::class.java) }
     }
