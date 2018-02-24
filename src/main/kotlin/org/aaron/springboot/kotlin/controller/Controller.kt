@@ -4,7 +4,6 @@ import mu.KLogging
 import org.aaron.springboot.kotlin.model.TestObject
 import org.aaron.springboot.kotlin.service.TestService
 import org.aaron.springboot.kotlin.service.WeatherService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -15,8 +14,8 @@ import reactor.core.publisher.Mono
 
 @Service
 class Controller(
-        @Autowired private val testService: TestService,
-        @Autowired private val weatherService: WeatherService) {
+        private val testService: TestService,
+        private val weatherService: WeatherService) {
 
     companion object : KLogging()
 

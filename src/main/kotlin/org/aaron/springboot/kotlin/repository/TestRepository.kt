@@ -6,6 +6,8 @@ import org.aaron.springboot.kotlin.model.TestObjectAndID
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.publisher.toFlux
+import reactor.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
 
 @Service
@@ -28,7 +30,7 @@ class TestRepository {
                     logger.info { "collision saving id $id trying again" }
                 }
             }
-            Mono.just(TestObjectAndID(testObject = testObject, id = id))
+            TestObjectAndID(testObject = testObject, id = id).toMono()
         }
     }
 
@@ -37,6 +39,6 @@ class TestRepository {
     }
 
     fun getAll(): Flux<TestObjectAndID> {
-        return Flux.fromIterable(map.entries.map { e -> TestObjectAndID(e.key, e.value) })
+        return map.entries.map { e -> TestObjectAndID(e.key, e.value) }.toFlux()
     }
 }

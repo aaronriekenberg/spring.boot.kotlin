@@ -3,18 +3,17 @@ package org.aaron.springboot.kotlin.service
 import mu.KLogging
 import org.aaron.springboot.kotlin.config.WeatherConfiguration
 import org.aaron.springboot.kotlin.model.Weather
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import reactor.core.publisher.toMono
 import java.net.URI
 
 @Service
 class WeatherService(
-        @Autowired private val webClient: WebClient,
-        @Autowired private val weatherConfiguration: WeatherConfiguration) {
+        private val webClient: WebClient,
+        private val weatherConfiguration: WeatherConfiguration) {
 
     companion object : KLogging()
 
@@ -31,9 +30,9 @@ class WeatherService(
                             .exchange()
                             .flatMap { clientResponse ->
                                 if (!clientResponse.statusCode().is2xxSuccessful) {
-                                    Mono.just(Weather(
+                                    Weather(
                                             placeName = placeNameAndURI.placeName,
-                                            statusCode = clientResponse.statusCode().value()))
+                                            statusCode = clientResponse.statusCode().value()).toMono()
                                 } else {
                                     clientResponse.bodyToMono<Map<*, *>>()
                                             .flatMap { bodyMap ->
@@ -45,12 +44,12 @@ class WeatherService(
                                                 val condition = item?.get("condition") as Map<*, *>?
                                                 val temperature = condition?.get("temp") as String?
                                                 val text = condition?.get("text") as String?
-                                                Mono.just(
-                                                        Weather(placeName = placeNameAndURI.placeName,
-                                                                statusCode = clientResponse.statusCode().value(),
-                                                                reportTitle = title,
-                                                                reportTemperature = temperature,
-                                                                reportText = text))
+
+                                                Weather(placeName = placeNameAndURI.placeName,
+                                                        statusCode = clientResponse.statusCode().value(),
+                                                        reportTitle = title,
+                                                        reportTemperature = temperature,
+                                                        reportText = text).toMono()
 
                                             }
                                 }

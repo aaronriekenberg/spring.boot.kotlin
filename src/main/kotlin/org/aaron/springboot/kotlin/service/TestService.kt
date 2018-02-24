@@ -4,7 +4,6 @@ import mu.KLogging
 import org.aaron.springboot.kotlin.model.TestObject
 import org.aaron.springboot.kotlin.model.TestObjectAndID
 import org.aaron.springboot.kotlin.repository.TestRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -16,8 +15,8 @@ import java.net.URI
 
 @Service
 class TestService(
-        @Autowired private val webClient: WebClient,
-        @Autowired private val testRepository: TestRepository,
+        private val webClient: WebClient,
+        private val testRepository: TestRepository,
         @Value("\${testService.proxyURI}") private val proxyURI: String) {
 
     companion object : KLogging()
