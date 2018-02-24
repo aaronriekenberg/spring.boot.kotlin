@@ -11,10 +11,10 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.router
 
 @SpringBootApplication
-open class Application {
+class Application {
 
     @Bean
-    open fun routes(controller: Controller): RouterFunction<ServerResponse> {
+    fun routes(controller: Controller): RouterFunction<ServerResponse> {
         return router {
             (path("/kotlin_service/v1") and accept(MediaType.APPLICATION_JSON)).nest {
                 (POST("/") and contentType(MediaType.APPLICATION_JSON)).invoke(controller::createOne)
@@ -27,7 +27,7 @@ open class Application {
     }
 
     @Bean
-    open fun webClient(): WebClient {
+    fun webClient(): WebClient {
         return WebClient.create()
     }
 
