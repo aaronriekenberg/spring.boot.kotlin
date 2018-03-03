@@ -4,7 +4,9 @@ version '1.0-SNAPSHOT'
 buildscript {
     ext {
         kotlinVersion = '1.2.21'
-        springBootVersion = '2.0.0.RC2'
+        springBootVersion = '2.0.0.RELEASE'
+        jacksonVersion = '2.9.4'
+        kotlinLoggingVersion = '1.5.3'
     }
 
     repositories {
@@ -35,8 +37,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     compile "org.springframework.boot:spring-boot-starter-webflux:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
-    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.2'
-    compile group: 'io.github.microutils', name: 'kotlin-logging', version: '1.5.3'
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
+    compile "io.github.microutils:kotlin-logging:$kotlinLoggingVersion"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
