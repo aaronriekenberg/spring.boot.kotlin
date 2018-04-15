@@ -3,10 +3,10 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        kotlinVersion = '1.2.21'
-        springBootVersion = '2.0.0.RELEASE'
-        jacksonVersion = '2.9.4'
-        kotlinLoggingVersion = '1.5.3'
+        kotlinVersion = '1.2.31'
+        springBootVersion = '2.0.1.RELEASE'
+        jacksonVersion = '2.9.5'
+        kotlinLoggingVersion = '1.5.4'
     }
 
     repositories {
@@ -52,5 +52,5 @@ compileTestKotlin {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.6'
 }
