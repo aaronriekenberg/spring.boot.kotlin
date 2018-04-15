@@ -14,7 +14,7 @@ class WeatherConfiguration {
 
     companion object : KLogging()
 
-    val placeNameAndUriList = ArrayList<PlaceNameAndURI>()
+    val placeNameAndUriList = mutableListOf<PlaceNameAndURI>()
 
     @PostConstruct
     fun postConstruct() {
