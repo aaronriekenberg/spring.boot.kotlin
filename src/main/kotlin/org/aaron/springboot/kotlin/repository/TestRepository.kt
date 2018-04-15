@@ -15,7 +15,7 @@ class TestRepository {
 
     companion object : KLogging()
 
-    private val map: ConcurrentHashMap<Int, TestObject> = ConcurrentHashMap()
+    private val map = ConcurrentHashMap<Int, TestObject>()
 
     fun createOne(testObjectMono: Mono<TestObject>): Mono<TestObjectAndID> {
         return testObjectMono.flatMap { testObject ->
