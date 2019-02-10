@@ -3,9 +3,9 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        kotlinVersion = '1.3.0'
-        springBootVersion = '2.1.0.RELEASE'
-        kotlinLoggingVersion = '1.6.10'
+        kotlinVersion = '1.3.21'
+        springBootVersion = '2.1.2.RELEASE'
+        kotlinLoggingVersion = '1.6.23'
     }
     repositories {
         mavenCentral()
@@ -42,8 +42,4 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.10.2'
 }
